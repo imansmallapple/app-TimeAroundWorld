@@ -70,7 +70,7 @@ export interface City {
   offset: number;
 }
 
-const supportedSystemTimezone: City[] =
+export const supportedSystemTimezone: City[] =
   [
     {
       timezone: 'Antarctica',

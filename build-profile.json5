@@ -4,13 +4,13 @@
       {
         "name": "default",
         "material": {
-          "certpath": "C:/Users/c84381641/.ohos/config/openharmony/default_timeTest_E_rNl5huk1-VP6d2-lXjHZTxIarlOKS5wfCTYXNUnMk=.cer",
-          "storePassword": "0000001BA9849ECD6DD4967F701F1E33FFA2E5E2E09DEB79AA3883C1D56939F34E1C82CD705DE75B96BEC4",
+          "certpath": "C:/Users/c84381641/.ohos/config/openharmony/default_TimeAroundWorld_J3cnhik2VPMwDVNzaSUw6IEbSWo9ZiK7JGOEcjTQDy0=.cer",
+          "storePassword": "0000001B654111D68F06358A353DDF7B91DE25901178792794DB9EC3B399ED3C35111FB0AFDA6B5BE9BC32",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BE919903A5D0E3F03D8FEBF7ACCF7BF5761AB18272892C5D34939BC4F9338DA623625B7C511B358",
-          "profile": "C:/Users/c84381641/.ohos/config/openharmony/default_timeTest_E_rNl5huk1-VP6d2-lXjHZTxIarlOKS5wfCTYXNUnMk=.p7b",
+          "keyPassword": "0000001BD0694A2D78570C338D4630E241AB78D09A3912C958EF0EFDAC5990658D8D3139B1F9F9D6150FBB",
+          "profile": "C:/Users/c84381641/.ohos/config/openharmony/default_TimeAroundWorld_J3cnhik2VPMwDVNzaSUw6IEbSWo9ZiK7JGOEcjTQDy0=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:/Users/c84381641/.ohos/config/openharmony/default_timeTest_E_rNl5huk1-VP6d2-lXjHZTxIarlOKS5wfCTYXNUnMk=.p12"
+          "storeFile": "C:/Users/c84381641/.ohos/config/openharmony/default_TimeAroundWorld_J3cnhik2VPMwDVNzaSUw6IEbSWo9ZiK7JGOEcjTQDy0=.p12"
         }
       }
     ],

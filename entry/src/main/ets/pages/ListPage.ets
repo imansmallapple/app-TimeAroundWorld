@@ -3,12 +3,17 @@ import { MyDataSource, City } from '../Data/DataSource'
 
 @Entry
 @Component
-export struct BundleInfo {
+export struct ListPage {
+  // pathStack: NavPathStack = new NavPathStack()
+  // pathStack: NavPathStack = AppStorage.get("PathStack") as NavPathStack
   // 创建数据源 上面的例子对其初始化过了
   @State dataSet: MyDataSource = new MyDataSource()
   @StorageLink("records") records: City[] = [];
-
+  // onPageShow(): void {
+  //   AppStorage.setOrCreate("PathStack", this.pathStack)
+  // }
   build() {
+    // NavDestination() {
     Scroll() {
       Column() {
         //在需要渲染的地方使用LazyForEach并传入数据源实例
@@ -41,21 +46,27 @@ export struct BundleInfo {
             .borderRadius(20)
             .backgroundColor('#f6f6f6')
           }
-          .onClick(()=>{
+          .onClick(() => {
             router.pushUrl({
               url: 'pages/Index',
-              // params:{
-              //   timeone: item.timezone,
-              //   name: item.name,
-              //   offset: item.offset
-              // }
+            //   // params:{
+            //   //   timeone: item.timezone,
+            //   //   name: item.name,
+            //   //   offset: item.offset
+            //   // }
             })
             this.records.push(item)
             AppStorage.setOrCreate("records", this.records);
+            // this.pathStack.pop()
           })
         })
       }
       .layoutWeight(1)
     }
+    //   }
+    // .title('ListPage')
+    // .onReady((context: NavDestinationContext) => {
+    //   this.pathStack = context.pathStack
+    // })
   }
 }

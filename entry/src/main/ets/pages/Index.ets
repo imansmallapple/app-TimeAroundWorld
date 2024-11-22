@@ -15,6 +15,7 @@ struct Index {
   @State convertedTime: string = ''
   // @State convertedDate: string = ''
   intervalId: number = 0 // 定时器 ID
+  //todo: test if we can remove appStorage to store city
   @State cityList: City[] = AppStorage.get("records") ?? []
   @State isEdit: boolean = false
   @State isListEmpty: boolean = true
@@ -22,16 +23,17 @@ struct Index {
   controller: TextClockController = new TextClockController();
   @State currentTimeZoneOffset: number = 0
   @State convertedDate: string = AppStorage.get("Date") as string
-  // pathStack: NavPathStack = new NavPathStack()
-
-  // @Builder
-  // PagesMap(name: string) {
-  //   if (name == 'Index') {
-  //     Index()
-  //   } else if (name == 'ListPage') {
-  //     ListPage()
-  //   }
-  // }
+  pathStack: NavPathStack = new NavPathStack()
+  @State message: string = ''
+  @State citylist: City[] = []
+  @Builder
+  PagesMap(name: string) {
+    if (name == 'Index') {
+      Index()
+    } else if (name == 'ListPage') {
+      ListPage()
+    }
+  }
 
   aboutToAppear(): void {
     try {
@@ -51,8 +53,8 @@ struct Index {
     // const params = router.getParams() as City
     // this.cityList.push(params)
     this.startTimer(); // 启动定时器
-     // 全局设置一个NavPathStack
-     // AppStorage.setOrCreate("PathStack", this.pathStack)
+    // 全局设置一个NavPathStack
+    AppStorage.setOrCreate("PathStack", this.pathStack)
   }
 
   onPageShow(): void {
@@ -110,7 +112,7 @@ struct Index {
   }
 
   build() {
-    // Navigation(this.pathStack) {
+    Navigation(this.pathStack) {
 
       Stack() {
         Column() {
@@ -149,14 +151,14 @@ struct Index {
             Scroll() {
               Row() {
                 List({ scroller: this.scroller }) {
-                  ForEach(this.cityList, (item: City, index: number) => {
+                  ForEach(this.citylist, (item: City, index: number) => {
                     ListItem() {
                       Row({ space: 20 }) {
                         if (this.isEdit == true) {
                           Image($r('app.media.delete_icon'))
                             .height(25)
                             .onClick(() => {
-                              this.cityList.splice(index, 1);
+                              this.citylist.splice(index, 1);
                               // console.log(`item id:${index}`)
                             })
                         }
@@ -187,21 +189,29 @@ struct Index {
           .width('90%')
           .height('45%')
         }
-
+        Text(`message:${this.message}`)
         Button('+')
-          .zIndex(1)
+          .zIndex(1)// .onClick(() => {
+            //   this.pathStack.pushPathByName('ListPage', '');
+            //   // router.pushUrl({
+            //   //   url: 'pages/ListPage'
+            //   // })
+            // })
           .onClick(() => {
-            // this.pathStack.pushPathByName('ListPage', '');
-            router.pushUrl({
-              url: 'pages/ListPage'
-            })
+            let tmp!: City
+            this.pathStack.pushPathByName('ListPage', tmp, (popInfo) => {
+              this.message = '[pushPathByName]last page is: ' + popInfo.info.name + ', result: ' + JSON.stringify(popInfo.result);
+              let city = popInfo.result as City
+              this.message = city.name
+              this.citylist.push(city)
+            }); // Push the navigation destination page specified by name, with the data specified by param, to the navigation stack. Use the onPop callback to receive the page processing result.
           })
       }
       .alignContent(Alignment.Bottom)
-    // }
-    // .mode(NavigationMode.Stack)
-    // .titleMode(NavigationTitleMode.Mini)
-    // .title('Index')
-    // .navDestination(this.PagesMap)
+    }
+    .mode(NavigationMode.Stack)
+    .titleMode(NavigationTitleMode.Mini)
+    .title('Index')
+    .navDestination(this.PagesMap)
   }
 }

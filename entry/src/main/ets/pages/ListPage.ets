@@ -5,15 +5,15 @@ import { MyDataSource, City } from '../Data/DataSource'
 @Component
 export struct ListPage {
   // pathStack: NavPathStack = new NavPathStack()
-  // pathStack: NavPathStack = AppStorage.get("PathStack") as NavPathStack
+  pathStack: NavPathStack = AppStorage.get("PathStack") as NavPathStack
   // 创建数据源 上面的例子对其初始化过了
   @State dataSet: MyDataSource = new MyDataSource()
   @StorageLink("records") records: City[] = [];
-  // onPageShow(): void {
-  //   AppStorage.setOrCreate("PathStack", this.pathStack)
-  // }
+  onPageShow(): void {
+    AppStorage.setOrCreate("PathStack", this.pathStack)
+  }
   build() {
-    // NavDestination() {
+    NavDestination() {
     Scroll() {
       Column() {
         //在需要渲染的地方使用LazyForEach并传入数据源实例
@@ -46,27 +46,33 @@ export struct ListPage {
             .borderRadius(20)
             .backgroundColor('#f6f6f6')
           }
+          // .onClick(() => {
+          //   // router.pushUrl({
+          //   //   url: 'pages/Index',
+          //   // //   // params:{
+          //   // //   //   timeone: item.timezone,
+          //   // //   //   name: item.name,
+          //   // //   //   offset: item.offset
+          //   // //   // }
+          //   // })
+          //   this.records.push(item)
+          //   AppStorage.setOrCreate("records", this.records);
+          //   this.pathStack.pop()
+          // })
           .onClick(() => {
-            router.pushUrl({
-              url: 'pages/Index',
-            //   // params:{
-            //   //   timeone: item.timezone,
-            //   //   name: item.name,
-            //   //   offset: item.offset
-            //   // }
-            })
+            //todo: test if we can remove the usage of AppStorage
             this.records.push(item)
             AppStorage.setOrCreate("records", this.records);
-            // this.pathStack.pop()
+            this.pathStack.pop(item); // Return to the previous page and pass in the processing result to the onPop callback of push.
           })
         })
       }
       .layoutWeight(1)
     }
-    //   }
-    // .title('ListPage')
-    // .onReady((context: NavDestinationContext) => {
-    //   this.pathStack = context.pathStack
-    // })
+      }
+    .title('ListPage')
+    .onReady((context: NavDestinationContext) => {
+      this.pathStack = context.pathStack
+    })
   }
 }

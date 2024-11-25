@@ -23,7 +23,6 @@ export struct ListPage {
     NavDestination() {
       Scroll() {
         Column() {
-          Text(`Enter:${this.isEnter}`)
           Search({
             value: this.changeValue,
             placeholder: Object($r("app.string.search")),

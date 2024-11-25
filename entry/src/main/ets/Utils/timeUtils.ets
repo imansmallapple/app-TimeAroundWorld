@@ -1,5 +1,3 @@
-import I18n from '@ohos.i18n';
-
 export function timestampToDate(timestamp: number): string {
   const date = new Date(timestamp); // 将时间戳转为 Date 对象
 

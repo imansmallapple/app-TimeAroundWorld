@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "Time Around World"
+    },
+    {
+      "name": "search",
+      "value": "Search"
     }
   ]
 }

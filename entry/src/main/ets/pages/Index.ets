@@ -1,9 +1,10 @@
 import { BusinessError } from '@ohos.base';
 import systemDateTime from '@ohos.systemDateTime';
 import hilog from '@ohos.hilog';
-import { timestampToDate, timestampToTime } from '../Utils/timeUtils'
+import { timestampToDate } from '../Utils/timeUtils'
 import { City, supportedSystemTimezone } from '../Data/DataSource';
 import { ListPage } from './ListPage'
+import promptAction from '@ohos.promptAction';
 
 @Entry
 @Component
@@ -17,10 +18,10 @@ struct Index {
   scroller: Scroller = new Scroller()
   controller: TextClockController = new TextClockController();
   @State currentTimeZoneOffset: number = 0
-  @State convertedDate: string = AppStorage.get("Date") as string
+  @State convertedDate: string = ''
   pathStack: NavPathStack = new NavPathStack()
   @State message: string = ''
-  @State citylist: City[] = []
+  @State cityList: City[] = []
 
   @Builder
   PagesMap(name: string) {
@@ -65,8 +66,6 @@ struct Index {
           }
           this.currentTime = time;
           this.convertedDate = timestampToDate(time);
-          this.convertedTime = timestampToTime(time);
-          AppStorage.setOrCreate("Date", this.convertedDate);
         });
       } catch (e) {
         let error = e as BusinessError;
@@ -109,7 +108,6 @@ struct Index {
                 TextClock({ timeZoneOffset: this.currentTimeZoneOffset, controller: this.controller })
                   .fontSize(25)
                   .fontWeight(FontWeight.Bolder)
-
                 Text(`${this.timeZone}: ${this.convertedDate}`)
                   .fontSize(18)
                   .fontWeight(FontWeight.Lighter)
@@ -130,23 +128,33 @@ struct Index {
           .height('50%')
 
           Column() {
-            Button(this.isEdit == false && this.isListEmpty == true ? 'Edit' : 'Cancel')
+            Button(this.isEdit == false ? 'Edit' : 'Cancel')
               .position({})
               .onClick(() => {
-                this.isEdit = (this.isEdit == false ? true : false)
+                if (this.isListEmpty) {
+                  promptAction.showToast({
+                    message: 'Can\'t edit empty list!',
+                  })
+                }
+                else {
+                  this.isEdit = this.isEdit == false ? true : false;
+                }
               })
             Scroll() {
               Row() {
                 List({ scroller: this.scroller }) {
-                  ForEach(this.citylist, (item: City, index: number) => {
+                  ForEach(this.cityList, (item: City, index: number) => {
                     ListItem() {
                       Row({ space: 20 }) {
                         if (this.isEdit == true) {
                           Image($r('app.media.delete_icon'))
                             .height(25)
                             .onClick(() => {
-                              this.citylist.splice(index, 1);
-                              // console.log(`item id:${index}`)
+                              this.cityList.splice(index, 1);
+                              if (this.cityList[0] == null) {
+                                this.isListEmpty = true
+                                this.isEdit = false
+                              }
                             })
                         }
                         Text(`${item.name}`)
@@ -181,11 +189,13 @@ struct Index {
           .zIndex(1)
           .onClick(() => {
             let tmp!: City
+            if (this.cityList[0] == null) {
+              this.isListEmpty = false
+            }
             this.pathStack.pushPathByName('ListPage', tmp, (popInfo) => {
-              // this.message = '[pushPathByName]last page is: ' + popInfo.info.name + ', result: ' + JSON.stringify(popInfo.result);
               let city = popInfo.result as City
               this.message = city.name
-              this.citylist.push(city)
+              this.cityList.push(city)
             }); // Push the navigation destination page specified by name, with the data specified by param, to the navigation stack. Use the onPop callback to receive the page processing result.
           })
       }
@@ -193,7 +203,7 @@ struct Index {
     }
     .mode(NavigationMode.Stack)
     .titleMode(NavigationTitleMode.Mini)
-    .title('Index')
+    .title('Clock')
     .navDestination(this.PagesMap)
     .hideBackButton(true)
   }

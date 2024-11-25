@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "世界时钟"
+    },
+    {
+      "name": "search",
+      "value": "搜索"
     }
   ]
 }

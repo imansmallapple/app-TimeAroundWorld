@@ -1,22 +1,17 @@
 import { BusinessError } from '@ohos.base';
 import systemDateTime from '@ohos.systemDateTime';
 import hilog from '@ohos.hilog';
-import { timestampToDate, timestampToTime, timezone } from '../Utils/timeUtils'
-import router from '@ohos.router';
+import { timestampToDate, timestampToTime } from '../Utils/timeUtils'
 import { City, supportedSystemTimezone } from '../Data/DataSource';
 import { ListPage } from './ListPage'
 
-// todo: delete function
 @Entry
 @Component
 struct Index {
   @State timeZone: string = ''
   @State currentTime: number = 0
   @State convertedTime: string = ''
-  // @State convertedDate: string = ''
   intervalId: number = 0 // 定时器 ID
-  //todo: test if we can remove appStorage to store city
-  @State cityList: City[] = AppStorage.get("records") ?? []
   @State isEdit: boolean = false
   @State isListEmpty: boolean = true
   scroller: Scroller = new Scroller()
@@ -26,6 +21,7 @@ struct Index {
   pathStack: NavPathStack = new NavPathStack()
   @State message: string = ''
   @State citylist: City[] = []
+
   @Builder
   PagesMap(name: string) {
     if (name == 'Index') {
@@ -50,18 +46,9 @@ struct Index {
       let error = e as BusinessError;
       console.info(`Failed to get timezone. message: ${error.message}, code: ${error.code}`);
     }
-    // const params = router.getParams() as City
-    // this.cityList.push(params)
     this.startTimer(); // 启动定时器
     // 全局设置一个NavPathStack
     AppStorage.setOrCreate("PathStack", this.pathStack)
-  }
-
-  onPageShow(): void {
-    // this.pathStack = AppStorage.get("PathStack") as NavPathStack
-    // hilog.info(0x0,JSON.stringify(this.pathStack),"abcdefg")
-    // hilog.info(0x0000, 'testTag', '%{public}s', `abcdefg:${this.pathStack}`)
-    // console.log("AAA " + this.cityList.toString())
   }
 
   aboutToDisappear(): void {
@@ -189,18 +176,13 @@ struct Index {
           .width('90%')
           .height('45%')
         }
-        Text(`message:${this.message}`)
+
         Button('+')
-          .zIndex(1)// .onClick(() => {
-            //   this.pathStack.pushPathByName('ListPage', '');
-            //   // router.pushUrl({
-            //   //   url: 'pages/ListPage'
-            //   // })
-            // })
+          .zIndex(1)
           .onClick(() => {
             let tmp!: City
             this.pathStack.pushPathByName('ListPage', tmp, (popInfo) => {
-              this.message = '[pushPathByName]last page is: ' + popInfo.info.name + ', result: ' + JSON.stringify(popInfo.result);
+              // this.message = '[pushPathByName]last page is: ' + popInfo.info.name + ', result: ' + JSON.stringify(popInfo.result);
               let city = popInfo.result as City
               this.message = city.name
               this.citylist.push(city)
@@ -213,5 +195,6 @@ struct Index {
     .titleMode(NavigationTitleMode.Mini)
     .title('Index')
     .navDestination(this.PagesMap)
+    .hideBackButton(true)
   }
 }

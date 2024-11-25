@@ -4,11 +4,9 @@ import { MyDataSource, City } from '../Data/DataSource'
 @Entry
 @Component
 export struct ListPage {
-  // pathStack: NavPathStack = new NavPathStack()
-  pathStack: NavPathStack = AppStorage.get("PathStack") as NavPathStack
+  pathStack: NavPathStack = new NavPathStack()
   // 创建数据源 上面的例子对其初始化过了
   @State dataSet: MyDataSource = new MyDataSource()
-  @StorageLink("records") records: City[] = [];
   onPageShow(): void {
     AppStorage.setOrCreate("PathStack", this.pathStack)
   }
@@ -46,23 +44,7 @@ export struct ListPage {
             .borderRadius(20)
             .backgroundColor('#f6f6f6')
           }
-          // .onClick(() => {
-          //   // router.pushUrl({
-          //   //   url: 'pages/Index',
-          //   // //   // params:{
-          //   // //   //   timeone: item.timezone,
-          //   // //   //   name: item.name,
-          //   // //   //   offset: item.offset
-          //   // //   // }
-          //   // })
-          //   this.records.push(item)
-          //   AppStorage.setOrCreate("records", this.records);
-          //   this.pathStack.pop()
-          // })
           .onClick(() => {
-            //todo: test if we can remove the usage of AppStorage
-            this.records.push(item)
-            AppStorage.setOrCreate("records", this.records);
             this.pathStack.pop(item); // Return to the previous page and pass in the processing result to the onPop callback of push.
           })
         })

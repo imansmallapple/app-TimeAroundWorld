@@ -108,7 +108,7 @@ export struct ListPage {
                         .margin(10)
                         .fontSize(20)
                       if(this.selectedCities.includes(item.name)){
-                        Text('City Selected!')
+                        Text('√')
                       }
                     }
                     .margin(5)
@@ -186,8 +186,7 @@ export struct ListPage {
             } else {
               hilog.error(0x00, `Selected alphabet "${alphabet}" not found in the map.`, 'error');
             }
-          });
-
+          })
       }
     }
     .title('ListPage')

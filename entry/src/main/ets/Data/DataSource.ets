@@ -68,164 +68,196 @@ export interface City {
   name: string;
   timezone: string;
   offset: number;
+  headerWord: string;
 }
 
 export const supportedSystemTimezone: City[] =
   [
     {
-      timezone: 'Antarctica',
-      name: 'McMurdo',
-      offset: 12,
+      timezone: 'Asia',
+      name: 'Almaty',
+      offset: 6,
+      headerWord: 'A'
     },
     {
       timezone: 'America',
       name: 'Argentina',
-      offset: -3
-    },
-    {
-      timezone: 'America',
-      name: 'Sydney',
-      offset: 10
-    },
-    {
-      timezone: 'America',
-      name: 'Noronha',
-      offset: -2
-    },
-    {
-      timezone: 'America',
-      name: 'St_Johns',
-      offset: -3
-    },
-    {
-      timezone: 'Africa',
-      name: 'Kinshasa',
-      offset: 1
-    },
-    {
-      timezone: 'America',
-      name: 'Santiago',
-      offset: -3
-    },
-    {
-      timezone: 'Asia',
-      name: 'Shanghai',
-      offset: 8
-    },
-    {
-      timezone: 'Asia',
-      name: 'Nicosia',
-      offset: 3
-    },
-    {
-      timezone: 'Europe',
-      name: 'Berlin',
-      offset: 2
-    },
-    {
-      timezone: 'America',
-      name: 'Guayaquil',
-      offset: -5
-    },
-    {
-      timezone: 'Europe',
-      name: 'Madrid',
-      offset: 2
-    },
-    {
-      timezone: 'Pacific',
-      name: 'Pohnpei',
-      offset: 11
-    },
-    {
-      timezone: 'America',
-      name: 'Godthab',
-      offset: -2
-    },
-    {
-      timezone: 'Asia',
-      name: 'Jakarta',
-      offset: 7
-    },
-    {
-      timezone: 'Pacific',
-      name: 'Tarawa',
-      offset: 12
-    },
-    {
-      timezone: 'Asia',
-      name: 'Almaty',
-      offset: 6
-    },
-    {
-      timezone: 'Pacific',
-      name: 'Majuro',
-      offset: 12
-    },
-    {
-      timezone: 'Asia',
-      name: 'Ulaanbaatar',
-      offset: 8
-    },
-    {
-      timezone: 'America',
-      name: 'Mexico_City',
-      offset: -5
-    },
-    {
-      timezone: 'Asia',
-      name: 'Kuala_Lumpur',
-      offset: 8
+      offset: -3,
+      headerWord: 'A'
     },
     {
       timezone: 'Pacific',
       name: 'Auckland',
-      offset: 12
+      offset: 12,
+      headerWord: 'A'
     },
     {
-      timezone: 'Pacific',
-      name: 'Tahiti',
-      offset: -10
-    },
-    {
-      timezone: 'Pacific',
-      name: 'Port_Moresby',
-      offset: 10
+      timezone: 'Europe',
+      name: 'Berlin',
+      offset: 2,
+      headerWord: 'B'
     },
     {
       timezone: 'Asia',
       name: 'Gaza',
-      offset: 3
+      offset: 3,
+      headerWord: 'G'
     },
     {
-      timezone: 'Europe',
-      name: 'Lisbon',
-      offset: 1
+      timezone: 'America',
+      name: 'Godthab',
+      offset: -2,
+      headerWord: 'G'
     },
     {
-      timezone: 'Europe',
-      name: 'Moscow',
-      offset: 3
+      timezone: 'America',
+      name: 'Guayaquil',
+      offset: -5,
+      headerWord: 'G'
+    },
+    {
+      timezone: 'Asia',
+      name: 'Jakarta',
+      offset: 7,
+      headerWord: 'J'
     },
     {
       timezone: 'Europe',
       name: 'Kiev',
-      offset: 3
+      offset: 3,
+      headerWord: 'K'
+    },
+    {
+      timezone: 'Africa',
+      name: 'Kinshasa',
+      offset: 1,
+      headerWord: 'K'
+    },
+    {
+      timezone: 'Asia',
+      name: 'Kuala_Lumpur',
+      offset: 8,
+      headerWord: 'K'
+    },
+    {
+      timezone: 'Europe',
+      name: 'Lisbon',
+      offset: 1,
+      headerWord: 'L'
+    },
+    {
+      timezone: 'Europe',
+      name: 'Madrid',
+      offset: 2,
+      headerWord: 'M'
     },
     {
       timezone: 'Pacific',
-      name: 'Wake',
-      offset: 12
+      name: 'Majuro',
+      offset: 12,
+      headerWord: 'M'
+    },
+    {
+      timezone: 'Antarctica',
+      name: 'McMurdo',
+      offset: 12,
+      headerWord: 'M'
+    },
+    {
+      timezone: 'Europe',
+      name: 'Moscow',
+      offset: 3,
+      headerWord: 'M'
+    },
+    {
+      timezone: 'America',
+      name: 'Mexico_City',
+      offset: -5,
+      headerWord: 'M'
     },
     {
       timezone: 'America',
       name: 'New_York',
-      offset: -4
+      offset: -4,
+      headerWord: 'N'
+    },
+    {
+      timezone: 'Asia',
+      name: 'Nicosia',
+      offset: 3,
+      headerWord: 'N'
+    },
+    {
+      timezone: 'America',
+      name: 'Noronha',
+      offset: -2,
+      headerWord: 'N'
+    },
+    {
+      timezone: 'Pacific',
+      name: 'Pohnpei',
+      offset: 11,
+      headerWord: 'P'
+    },
+    {
+      timezone: 'Pacific',
+      name: 'Port_Moresby',
+      offset: 10,
+      headerWord: 'P'
+    },
+    {
+      timezone: 'America',
+      name: 'Santiago',
+      offset: -3,
+      headerWord: 'S'
+    },
+    {
+      timezone: 'Asia',
+      name: 'Shanghai',
+      offset: 8,
+      headerWord: 'S'
+    },
+    {
+      timezone: 'America',
+      name: 'St_Johns',
+      offset: -3,
+      headerWord: 'S'
+    },
+    {
+      timezone: 'America',
+      name: 'Sydney',
+      offset: 10,
+      headerWord: 'S'
+    },
+    {
+      timezone: 'Pacific',
+      name: 'Tahiti',
+      offset: -10,
+      headerWord: 'T'
+    },
+    {
+      timezone: 'Pacific',
+      name: 'Tarawa',
+      offset: 12,
+      headerWord: 'T'
     },
     {
       timezone: 'Asia',
       name: 'Tashkent',
-      offset: 5
+      offset: 5,
+      headerWord: 'T'
+    },
+    {
+      timezone: 'Asia',
+      name: 'Ulaanbaatar',
+      offset: 8,
+      headerWord: 'U'
+    },
+    {
+      timezone: 'Pacific',
+      name: 'Wake',
+      offset: 12,
+      headerWord: 'W'
     },
   ];
 

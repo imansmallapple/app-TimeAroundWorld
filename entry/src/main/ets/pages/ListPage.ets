@@ -1,6 +1,6 @@
 import { MyDataSource, City, supportedSystemTimezone } from '../Data/DataSource'
-import { KeyCode } from '@ohos.multimodalInput.keyCode';
 import hilog from '@ohos.hilog';
+PersistentStorage.persistProp<string[]>('selectedCities',[])
 
 @Entry
 @Component
@@ -19,6 +19,7 @@ export struct ListPage {
   private scroller: Scroller = new Scroller()
   private alphabets: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
   @State private selectedIndex: number = 0
+  @StorageLink('selectedCities') selectedCities: string[] = []
 
   onPageShow(): void {
     AppStorage.setOrCreate("PathStack", this.pathStack)
@@ -109,6 +110,9 @@ export struct ListPage {
                       Text(item.offset.toString())
                         .margin(10)
                         .fontSize(20)
+                      if(this.selectedCities.includes(item.name)){
+                        Text('City Selected!')
+                      }
                     }
                     .margin(5)
                     .width('95%')
@@ -118,7 +122,10 @@ export struct ListPage {
                   }
                 }
                 .onClick(() => {
-                  this.pathStack.pop(item); // Return to the previous page and pass in the processing result to the onPop callback of push.
+                  if (!this.selectedCities.includes(item.name)) {
+                    this.selectedCities.push(item.name);
+                    this.pathStack.pop(item);
+                  }
                 })
               })
             }

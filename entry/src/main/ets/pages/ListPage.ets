@@ -52,9 +52,6 @@ export struct ListPage {
             placeholder: Object($r("app.string.search")),
             controller: this.controller,
           })
-            .searchButton(// getContext(this).resourceManager.getStringSync($r("app.string.search"))
-              "Search"
-            )
             .focusable(true)
             .width("100%")
             .height(40)

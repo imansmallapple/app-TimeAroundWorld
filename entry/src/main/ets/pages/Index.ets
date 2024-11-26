@@ -190,7 +190,7 @@ struct Index {
               top: 40
             })
           }
-          .backgroundColor(Color.Blue)
+          .backgroundColor(Color.Pink)
           .width('90%')
           .height('45%')
         }

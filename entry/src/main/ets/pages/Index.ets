@@ -6,6 +6,8 @@ import { City, supportedSystemTimezone } from '../Data/DataSource';
 import { ListPage } from './ListPage'
 import promptAction from '@ohos.promptAction';
 
+PersistentStorage.persistProp<City[]>('cityList', [])
+
 @Entry
 @Component
 struct Index {
@@ -21,7 +23,8 @@ struct Index {
   @State convertedDate: string = ''
   pathStack: NavPathStack = new NavPathStack()
   @State message: string = ''
-  @State cityList: City[] = []
+  // @State cityList: City[] = []
+  @StorageLink('cityList') cityList: City[] = []
 
   @Builder
   PagesMap(name: string) {
@@ -33,6 +36,13 @@ struct Index {
   }
 
   aboutToAppear(): void {
+    //Check list is empty or not
+    if (this.cityList[0] == null) {
+      this.isListEmpty = true
+    }else{
+      this.isListEmpty = false
+    }
+
     try {
       systemDateTime.getTimezone((error: BusinessError, data: string) => {
         if (error) {

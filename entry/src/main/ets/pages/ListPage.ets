@@ -1,6 +1,8 @@
 import { MyDataSource, City, supportedSystemTimezone } from '../Data/DataSource'
 import hilog from '@ohos.hilog';
-PersistentStorage.persistProp<string[]>('selectedCities',[])
+import promptAction from '@ohos.promptAction';
+
+PersistentStorage.persistProp<string[]>('selectedCities', [])
 
 @Entry
 @Component
@@ -100,22 +102,45 @@ export struct ListPage {
                         Text(item.headerWord)
                       }
                     }
-                    Row() {
-                      Text(item.name)
-                        .margin(10)
-                        .fontSize(20)
-                      Text(item.offset.toString())
-                        .margin(10)
-                        .fontSize(20)
-                      if(this.selectedCities.includes(item.name)){
+                    if (this.selectedCities.includes(item.name)) {
+                      Row() {
+                        Column() {
+                          Text(item.name)
+                            .margin(10)
+                            .fontSize(20)
+                          Text(`UTC${item.offset >= 0 ? '+' + item.offset.toString()
+                            .padStart(2, '0') :
+                            '-' + Math.abs(item.offset).toString().padStart(2, '0')}:00`)
+                            .utcStyle()
+                        }
+                        .width(200)
+                        .alignItems(HorizontalAlign.Start)
                         Text('√')
                       }
+                      .rowStyle()
+                      .onClick(() => {
+                        promptAction.showToast({
+                          message: 'The city was added to the list!'
+                        })
+                      })
                     }
-                    .margin(5)
-                    .width('95%')
-                    .height('20%')
-                    .borderRadius(20)
-                    .backgroundColor('#f6f6f6')
+                    else {
+                      Row() {
+                        Column() {
+                          Text(item.name)
+                            .margin(10)
+                            .fontSize(20)
+                          //Suplement UTC with correct format
+                          Text(`UTC${item.offset >= 0 ? '+' + item.offset.toString()
+                            .padStart(2, '0') :
+                            '-' + Math.abs(item.offset).toString().padStart(2, '0')}:00`)
+                            .utcStyle()
+                        }
+                        .width(200)
+                        .alignItems(HorizontalAlign.Start)
+                      }
+                      .rowStyle()
+                    }
                   }
                 }
                 .onClick(() => {
@@ -137,10 +162,6 @@ export struct ListPage {
             ForEach(this.filteredCities, (item: City) => {
               ListItem() {
                 Row() {
-                  // Text(item.timezone)
-                  //   .margin(10)
-                  //   .fontSize(20)
-
                   Text(item.name)
                     .margin(10)
                     .fontSize(20)
@@ -149,12 +170,6 @@ export struct ListPage {
                     .margin(10)
                     .fontSize(20)
 
-                  // Image($r('app.media.add_icon'))
-                  //   .margin(10)
-                  //   .width('15%')
-                  //   .height('20%')
-                  //   .layoutWeight(1)
-                  //   .objectFit(ImageFit.Contain)
                 }
                 .margin(5)
                 .width('95%')
@@ -194,4 +209,20 @@ export struct ListPage {
       this.pathStack = context.pathStack
     })
   }
+}
+
+@Extend(Row)
+function rowStyle() {
+  .margin(5)
+  .width('95%')
+  .height('20%')
+  .borderRadius(20)
+  .backgroundColor('#f6f6f6')
+}
+
+@Extend(Text)
+function utcStyle() {
+  .margin(10)
+  .fontSize(12)
+  .fontColor('#6b111111')
 }

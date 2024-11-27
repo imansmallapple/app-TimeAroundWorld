@@ -39,7 +39,7 @@ struct Index {
     //Check list is empty or not
     if (this.cityList[0] == null) {
       this.isListEmpty = true
-    }else{
+    } else {
       this.isListEmpty = false
     }
 
@@ -50,7 +50,7 @@ struct Index {
           return;
         }
         this.timeZone = data;
-        this.currentTimeZoneOffset = (this.getTimezoneOffsetByName(this.timeZone) as number) * -1
+        this.currentTimeZoneOffset = (this.getTimezoneOffsetByName(this.timeZone) as number)
         hilog.info(0x0000, `Succeeded in get timezone : ${data}`, '%{public}s');
       });
     } catch (e) {
@@ -115,7 +115,7 @@ struct Index {
           Column() {
             Row() {
               Column() {
-                TextClock({ timeZoneOffset: this.currentTimeZoneOffset, controller: this.controller })
+                TextClock({ timeZoneOffset: this.currentTimeZoneOffset*-1, controller: this.controller })
                   .fontSize(25)
                   .fontWeight(FontWeight.Bolder)
                 Text(`${this.timeZone}: ${this.convertedDate}`)
@@ -167,9 +167,15 @@ struct Index {
                               }
                             })
                         }
-                        Text(`${item.name}`)
-                          .fontWeight(FontWeight.Bold)
-                          .fontSize(20)
+                        Column() {
+                          Text(`${item.name}`)
+                            .fontWeight(FontWeight.Bold)
+                            .fontSize(20)
+                          Text(`${(this.currentTimeZoneOffset - item.offset) < 0 ? 'Eariler ' + Math.abs(this.currentTimeZoneOffset - item.offset) + (Math.abs(this.currentTimeZoneOffset - item.offset) > 1 ? ' hours' : ' hour') : ((this.currentTimeZoneOffset - item.offset) == 0 ? '' : 'Late ' + (this.currentTimeZoneOffset - item.offset) + (Math.abs(this.currentTimeZoneOffset - item.offset) > 1 ? ' hours' : ' hour'))} `)
+                            .fontColor('#74110f0f')
+                        }
+                        .alignItems(HorizontalAlign.Start)
+
                         TextClock({ timeZoneOffset: item.offset * -1, controller: this.controller })
                           .layoutWeight(1)
                           .align(Alignment.End)

@@ -22,6 +22,7 @@ export struct ListPage {
   private alphabets: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
   @State private selectedIndex: number = 0
   @StorageLink('selectedCities') selectedCities: string[] = []
+  @StorageLink('cityList') cityList: City[] = []
 
   onPageShow(): void {
     AppStorage.setOrCreate("PathStack", this.pathStack)
@@ -102,7 +103,7 @@ export struct ListPage {
                         Text(item.headerWord)
                       }
                     }
-                    if (this.selectedCities.includes(item.name)) {
+                    if (this.cityList.includes(item)) {
                       Row() {
                         Column() {
                           Text(item.name)
@@ -144,7 +145,7 @@ export struct ListPage {
                   }
                 }
                 .onClick(() => {
-                  if (!this.selectedCities.includes(item.name)) {
+                  if (!this.cityList.includes(item)) {
                     this.selectedCities.push(item.name);
                     this.pathStack.pop(item);
                   }

@@ -28,6 +28,12 @@ export struct ListPage {
     AppStorage.setOrCreate("PathStack", this.pathStack)
   }
 
+  aboutToAppear(): void {
+    for (let index = 0; index < this.cityList.length; index++) {
+      this.selectedCities[index] = this.cityList[index].name
+    }
+  }
+
   private mapAlphabetsIndex(): Map<string, number> {
     let mapAlphabetsIndex: Map<string, number> = new Map()
 
@@ -103,7 +109,7 @@ export struct ListPage {
                         Text(item.headerWord)
                       }
                     }
-                    if (this.cityList.includes(item)) {
+                    if (this.cityList.includes(item) || this.selectedCities.includes(item.name)) {
                       Row() {
                         Column() {
                           Text(item.name)
@@ -116,6 +122,7 @@ export struct ListPage {
                         }
                         .width(200)
                         .alignItems(HorizontalAlign.Start)
+
                         Text('√')
                       }
                       .rowStyle()
@@ -163,14 +170,18 @@ export struct ListPage {
             ForEach(this.filteredCities, (item: City) => {
               ListItem() {
                 Row() {
-                  Text(item.name)
-                    .margin(10)
-                    .fontSize(20)
-
-                  Text(item.offset.toString())
-                    .margin(10)
-                    .fontSize(20)
-
+                  Column() {
+                    Text(item.name)
+                      .margin(10)
+                      .fontSize(20)
+                    //Suplement UTC with correct format
+                    Text(`UTC${item.offset >= 0 ? '+' + item.offset.toString()
+                      .padStart(2, '0') :
+                      '-' + Math.abs(item.offset).toString().padStart(2, '0')}:00`)
+                      .utcStyle()
+                  }
+                  .width(200)
+                  .alignItems(HorizontalAlign.Start)
                 }
                 .margin(5)
                 .width('95%')

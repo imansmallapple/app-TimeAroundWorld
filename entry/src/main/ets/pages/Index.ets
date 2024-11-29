@@ -25,6 +25,7 @@ struct Index {
   @State message: string = ''
   // @State cityList: City[] = []
   @StorageLink('cityList') cityList: City[] = []
+  @StorageLink('selectedCities') selectedCities: string[] = []
 
   @Builder
   PagesMap(name: string) {
@@ -161,6 +162,7 @@ struct Index {
                             .height(25)
                             .onClick(() => {
                               this.cityList.splice(index, 1);
+                              this.selectedCities.splice(index, 1)
                               if (this.cityList[0] == null) {
                                 this.isListEmpty = true
                                 this.isEdit = false

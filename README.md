@@ -6,6 +6,14 @@
 
 This is a documentation lists all the problems or noticeable thing during the app development.
 
+<p float="left">
+  <img src="images/image_1.png" alt="screenshot" width="200"/>
+  <img src="images/image_2.png" alt="screenshot" width="200"/>
+  <img src="images/image_3.png" alt="screenshot" width="200"/>
+  <img src="images/image_4.png" alt="screenshot" width="200"/>
+</p>
+
+
 ### Table of content
 
 [Functionaility](#functionaility)  

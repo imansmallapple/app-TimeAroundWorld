@@ -73,26 +73,25 @@ To make this function, I divided into 2 parts, one part convert the timestamp in
 
 ```typescript
 export function timestampToDate(timestamp: number): string {
-  const date = new Date(timestamp); // 将时间戳转为 Date 对象
-
-  // 格式化时间
+  const date = new Date(timestamp); // Transform 'Timestamp' into 'Date' object
+  // Uniform time format
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // 月份从 0 开始，需要加 1
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Month start from 0, we need add 1 at first
   const day = String(date.getDate()).padStart(2, "0");
 
-  // 拼接成需要的格式
+  // concatenate into required string format
   return `${year}-${month}-${day}`;
 }
 
 export function timestampToTime(timestamp: number): string {
-  const date = new Date(timestamp); // 将时间戳转为 Date 对象
+  const date = new Date(timestamp); // Transform 'Timestamp' into 'Date' object
 
-  // 格式化时间
+  // Uniform time format
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
   const seconds = String(date.getSeconds()).padStart(2, "0");
 
-  // 拼接成需要的格式
+  // concatenate into required string format
   return `${hours}:${minutes}:${seconds}`;
 }
 ```
@@ -206,9 +205,9 @@ In order to have a formal way of developement, we need to use `Navigation` rathe
 
 #### Solution
 
-本例子中有两个页面带有参数传递
+In this example there are 2 pages with parameter delivery
 
-Index 页面
+Index Page
 
 ```typescript
 @Entry
@@ -351,9 +350,8 @@ The city list items should be sorted somehow, so it's nice to have a Alphabet sc
 
 ##### Layout main structure
 ```typescript
-// 堆叠容器，方向居右
 Stack({ alignContent: Alignment.End }) {
-   // 列表布局   
+   // List layout  
    Column() {
         List() {
           ......
@@ -361,7 +359,7 @@ Stack({ alignContent: Alignment.End }) {
    }.width('100%')
    .height('100%')
        
-   // 字母索引导航
+   // Alphabet index navigator
    AlphabetIndexer()
 }
 ```
@@ -430,11 +428,11 @@ Obtains the map set corresponding to the letters and indexes in the list. The di
 
     for (let i = 0; i < this.unfilteredCities.length; i++) {
       const element = this.unfilteredCities[i];
-      // 第一个字母直接加入 Map
+      // Add first alphabet letter directly into Map
       if (i === 0) {
         mapAlphabetsIndex.set(element.headerWord, i);
       } else {
-        // 如果当前字母和前一个字母不一样，则加入 Map
+        // If current alphabet letter is different with pervious one, then add it into 'Map'
         if (element.headerWord != this.unfilteredCities[i - 1].headerWord) {
           mapAlphabetsIndex.set(element.headerWord, i);
         }
@@ -446,17 +444,17 @@ Obtains the map set corresponding to the letters and indexes in the list. The di
 ```typescript
 private alphabets: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 @State private selectedIndex: number = 0
-// 字母索引导航
+// Alphabet index navigator
 AlphabetIndexer({ arrayValue: this.alphabets, selected: this.selectedIndex })
   .onSelect((index: number) => {
-    // 选中的字母
+    // Chosen alphabet letter
     const alphabet = this.alphabets[index];
 
-    // 调用 mapAlphabetsIndex，获取字母到索引的映射表
+    // Call mapAlphabetsIndex，get 'alphabet letter' - 'Index' mapping table
     const mapIndex = this.mapAlphabetsIndex().get(alphabet);
 
     if (mapIndex !== undefined) {
-      // 跳转到指定索引位置
+      // Jump into designated index position
       this.scroller.scrollToIndex(mapIndex);
       hilog.info(0x00, `Selected alphabet "${alphabet}" found in the map.`, `mapIndex:${mapIndex}`);
 
@@ -471,16 +469,16 @@ AlphabetIndexer({ arrayValue: this.alphabets, selected: this.selectedIndex })
 List({ scroller: this.scroller }) {
 }
 .onScrollIndex((start, end) => {
-  // 监听滑动时顶部的索引，查询对应的数据
+  // Listen to the index on the top of the slide and query the corresponding data.
   const element = this.unfilteredCities[start]
-  // 更新选中的字母索引
+  // Update chosen alphabet index
   this.selectedIndex = this.alphabets.indexOf(element.headerWord)
 })
 ```
 
 #### Reference material
 
-ArkUI（TS）声明式开发：列表字母索引导航:  
+ArkUI (TS) Declarative Development: List Alphabet Index Navigation:
 https://ost.51cto.com/posts/11020
 
 ## Can not add the same city many times

@@ -4,13 +4,13 @@
       {
         "name": "default",
         "material": {
-          "certpath": "C:/Users/c84381641/.ohos/config/openharmony/default_TimeAroundWorld_J3cnhik2VPMwDVNzaSUw6IEbSWo9ZiK7JGOEcjTQDy0=.cer",
-          "storePassword": "0000001B654111D68F06358A353DDF7B91DE25901178792794DB9EC3B399ED3C35111FB0AFDA6B5BE9BC32",
+          "certpath": "./.secret/oniro-ci.cer",
+          "storePassword": "0000001BD5A16C997F0EF958596A946A060A50ED61DF4D945A74AB3C462CBCFBE5BA90427A3DEAC0D27D3E",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BD0694A2D78570C338D4630E241AB78D09A3912C958EF0EFDAC5990658D8D3139B1F9F9D6150FBB",
-          "profile": "C:/Users/c84381641/.ohos/config/openharmony/default_TimeAroundWorld_J3cnhik2VPMwDVNzaSUw6IEbSWo9ZiK7JGOEcjTQDy0=.p7b",
+          "keyPassword": "0000001BACA49D623B16BE8A9C4C216A9ED64244F7255BC9AEF8C862264DDA900496AD36202857353771E8",
+          "profile": "./.secret/oniro-ci.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:/Users/c84381641/.ohos/config/openharmony/default_TimeAroundWorld_J3cnhik2VPMwDVNzaSUw6IEbSWo9ZiK7JGOEcjTQDy0=.p12"
+          "storeFile": "./.secret/oniro-ci.p12"
         }
       }
     ],

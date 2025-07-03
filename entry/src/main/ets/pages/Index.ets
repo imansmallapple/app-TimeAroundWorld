@@ -1,10 +1,9 @@
-import { BusinessError } from '@ohos.base';
-import systemDateTime from '@ohos.systemDateTime';
-import hilog from '@ohos.hilog';
 import { timestampToDate } from '../Utils/timeUtils'
 import { City, supportedSystemTimezone } from '../Data/DataSource';
 import { ListPage } from './ListPage'
-import promptAction from '@ohos.promptAction';
+import { systemDateTime } from '@kit.BasicServicesKit';
+import { BusinessError } from '@kit.BasicServicesKit';
+import { hilog } from '@kit.PerformanceAnalysisKit';
 
 PersistentStorage.persistProp<City[]>('cityList', [])
 
@@ -70,14 +69,17 @@ struct Index {
   startTimer(): void {
     this.intervalId = setInterval(() => {
       try {
-        systemDateTime.getCurrentTime((error: BusinessError, time: number) => {
-          if (error) {
-            console.info(`Failed to get currentTime. message: ${error.message}, code: ${error.code}`);
-            return;
-          }
-          this.currentTime = time;
-          this.convertedDate = timestampToDate(time);
-        });
+        let time = systemDateTime.getTime(false)
+        this.currentTime = time
+        this.convertedDate = timestampToDate(time)
+        // systemDateTime.getCurrentTime((error: BusinessError, time: number) => {
+        //   if (error) {
+        //     console.info(`Failed to get currentTime. message: ${error.message}, code: ${error.code}`);
+        //     return;
+        //   }
+        //   this.currentTime = time;
+        //   this.convertedDate = timestampToDate(time);
+        // });
       } catch (e) {
         let error = e as BusinessError;
         console.info(`Failed to get currentTime. message: ${error.message}, code: ${error.code}`);
@@ -116,7 +118,7 @@ struct Index {
           Column() {
             Row() {
               Column() {
-                TextClock({ timeZoneOffset: this.currentTimeZoneOffset*-1, controller: this.controller })
+                TextClock({ timeZoneOffset: this.currentTimeZoneOffset * -1, controller: this.controller })
                   .fontSize(25)
                   .fontWeight(FontWeight.Bolder)
                 Text(`${this.timeZone}: ${this.convertedDate}`)
@@ -143,11 +145,10 @@ struct Index {
               .position({})
               .onClick(() => {
                 if (this.isListEmpty) {
-                  promptAction.showToast({
+                  this.getUIContext().getPromptAction().showToast({
                     message: 'Can\'t edit empty list!',
                   })
-                }
-                else {
+                } else {
                   this.isEdit = this.isEdit == false ? true : false;
                 }
               })
@@ -173,7 +174,12 @@ struct Index {
                           Text(`${item.name}`)
                             .fontWeight(FontWeight.Bold)
                             .fontSize(20)
-                          Text(`${(this.currentTimeZoneOffset - item.offset) < 0 ? 'Eariler ' + Math.abs(this.currentTimeZoneOffset - item.offset) + (Math.abs(this.currentTimeZoneOffset - item.offset) > 1 ? ' hours' : ' hour') : ((this.currentTimeZoneOffset - item.offset) == 0 ? '' : 'Late ' + (this.currentTimeZoneOffset - item.offset) + (Math.abs(this.currentTimeZoneOffset - item.offset) > 1 ? ' hours' : ' hour'))} `)
+                          Text(`${(this.currentTimeZoneOffset - item.offset) < 0 ?
+                            'Eariler ' + Math.abs(this.currentTimeZoneOffset - item.offset) +
+                              (Math.abs(this.currentTimeZoneOffset - item.offset) > 1 ? ' hours' : ' hour') :
+                            ((this.currentTimeZoneOffset - item.offset) == 0 ? '' :
+                              'Late ' + (this.currentTimeZoneOffset - item.offset) +
+                                (Math.abs(this.currentTimeZoneOffset - item.offset) > 1 ? ' hours' : ' hour'))} `)
                             .fontColor('#74110f0f')
                         }
                         .alignItems(HorizontalAlign.Start)

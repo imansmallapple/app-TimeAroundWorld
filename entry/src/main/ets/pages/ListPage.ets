@@ -1,10 +1,8 @@
 import { MyDataSource, City, supportedSystemTimezone } from '../Data/DataSource'
-import hilog from '@ohos.hilog';
-import promptAction from '@ohos.promptAction';
+import { hilog } from '@kit.PerformanceAnalysisKit'
 
 PersistentStorage.persistProp<string[]>('selectedCities', [])
 
-@Entry
 @Component
 export struct ListPage {
   pathStack: NavPathStack = new NavPathStack()
@@ -19,7 +17,9 @@ export struct ListPage {
   private controller: SearchController = new SearchController()
   @State isEnter: string = ''
   private scroller: Scroller = new Scroller()
-  private alphabets: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+  private alphabets: string[] =
+    ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+      'X', 'Y', 'Z']
   @State private selectedIndex: number = 0
   @StorageLink('selectedCities') selectedCities: string[] = []
   @StorageLink('cityList') cityList: City[] = []
@@ -127,12 +127,11 @@ export struct ListPage {
                       }
                       .rowStyle()
                       .onClick(() => {
-                        promptAction.showToast({
+                        this.getUIContext().getPromptAction().showToast({
                           message: 'The city was added to the list!'
                         })
                       })
-                    }
-                    else {
+                    } else {
                       Row() {
                         Column() {
                           Text(item.name)
@@ -165,8 +164,7 @@ export struct ListPage {
               // 更新选中的字母索引
               this.selectedIndex = this.alphabets.indexOf(element.headerWord)
             })
-          }
-          else {
+          } else {
             ForEach(this.filteredCities, (item: City) => {
               ListItem() {
                 Row() {

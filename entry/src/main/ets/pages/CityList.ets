@@ -1,7 +1,6 @@
 import { DataSource } from '../data/ServerDataSource';
 import { Area } from '../Interfaces/Area'
 
-@Entry
 @Component
 struct CityList {
   @State message: string = 'Hello World';

@@ -1,5 +1,6 @@
 {
-  "name": "timetest",
+  "modelVersion": "5.0.2",
+  "name": "pinwheel",
   "version": "1.0.0",
   "description": "Please describe the basic information.",
   "main": "",

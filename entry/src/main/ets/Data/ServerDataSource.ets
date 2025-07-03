@@ -1,5 +1,5 @@
-import http from '@ohos.net.http';
 import { Area, TimeZoneResponse, parseTimeZone } from '../Interfaces/Area'
+import { http } from '@kit.NetworkKit';
 
 
 // 服务器地址
